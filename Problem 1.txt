@@ -1,0 +1,52 @@
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String line[] = sc.nextLine().split(" ");
+        int n = Integer.parseInt(line[0]);
+        int k = Integer.parseInt(line[1]);
+
+        Map<Integer, Integer> map = new LinkedHashMap<>();
+        for(int i=0; i<n; i++)
+        {
+            int current = sc.nextInt();
+            if(!map.containsKey(current))
+            {
+                map.put(current, current);
+
+            }
+            else
+            {
+                map.put(current, map.get(current) + current);
+            }
+        }
+
+        List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
+
+        Collections.sort(
+                list,
+                new Comparator<Map.Entry<Integer, Integer>>(){
+                    public int compare(Map.Entry<Integer, Integer> value1, Map.Entry<Integer, Integer> value2){
+                        return value2.getValue()-value1.getValue();
+                    }
+                }
+        );
+        int i=0;
+        int sum = 0;
+        for(Map.Entry<Integer, Integer> l: list)
+        {
+            if(i<k)
+            {
+                i++;
+                sum += l.getValue();
+            }
+
+
+        }
+        System.out.println(sum);
+
+    }
+}

@@ -1,0 +1,75 @@
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+
+public class MyClass {
+
+    public static void main(String[] args) {
+
+
+
+        Scanner sc = new Scanner(System.in);
+        String s[] = sc.nextLine().split(",");
+        int arr[] = new int[s.length];
+
+
+
+        for(int i=0; i<s.length; i++)
+        {
+            arr[i] = Integer.parseInt(s[i].trim());
+        }
+
+        findT(arr, s.length);
+
+
+    }
+    public static void findT(int arr[], int n)
+    {
+        int found = 0;
+        ArrayList<String> list = new ArrayList<>();
+        for(int i=0; i<n-1; i++)
+        {
+            HashSet<Integer> s = new HashSet<Integer>();
+            for (int j = i + 1; j < n; j++)
+            {
+                int twoSum = -(arr[i] + arr[j]);
+                if (s.contains(twoSum))
+                {
+                    if(contains(list, arr[i], arr[j], twoSum))
+                        continue;
+                    list.add(arr[i] + " " + arr[j] + " " + twoSum);
+                    System.out.println(arr[i] + " " + arr[j] + " " + twoSum);
+                    found = 1;
+                }
+                else
+                {
+                    s.add(arr[j]);
+                }
+            }
+        }
+        if(found==0)
+            return;
+    }
+    public static boolean contains(ArrayList<String> s, int a, int b, int c){
+        boolean matched = false;
+        for(int i=0; i<s.size(); i++){
+            String st[] = s.get(i).split(" ");
+            int n1 = Integer.parseInt(st[0]);
+            int n2 = Integer.parseInt(st[1]);
+            int n3 = Integer.parseInt(st[2]);
+
+            Set<Integer> set = new HashSet<>();
+            set.add(n1);
+            set.add(n2);
+            set.add(n3);
+
+            if(set.contains(a) && set.contains(b) && set.contains(c)){
+                matched = true;
+                break;
+            }
+        }
+        return matched;
+    }
+}
